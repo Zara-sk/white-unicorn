@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { type GamesAction, GamesActionTypes } from "@types/gamesFetcher";
+import { GamesAction, GamesActionTypes } from "../../types/gamesFetcher";
 
 const fetchLocalGames = () => {
   return async (dispatch: Dispatch<GamesAction>) => {

@@ -1,8 +1,14 @@
-import React from "react";
+import { useAppSelector } from "@hooks/redux";
 import Chrome from "@components/Chrome";
 
 function App() {
-  return <div>12321</div>;
+  const games = useAppSelector((state) => state.games);
+  console.log(games);
+  return (
+    <div className="App">
+      <Chrome />
+    </div>
+  );
 }
 
 export default App;
