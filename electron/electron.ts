@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 
 let mainWindow: Electron.BrowserWindow | null;
@@ -30,7 +30,7 @@ function createWindow() {
     webPreferences: {
       javascript: true,
       nodeIntegration: true,
-      contextIsolation: false,
+      contextIsolation: true,
       preload: path.join(__dirname, "preload.js"),
     },
   });
@@ -40,6 +40,13 @@ function createWindow() {
   } else {
     mainWindow.loadFile(path.join(__dirname, "../build/index.html"));
   }
+
+  mainWindow.on("maximize", () => {
+    mainWindow?.webContents.send("maximizeEvent", mainWindow?.isMaximized());
+  });
+  mainWindow.on("unmaximize", () => {
+    mainWindow?.webContents.send("maximizeEvent", mainWindow?.isMaximized());
+  });
 
   mainWindow.once("ready-to-show", () => {
     if (mainWindow != undefined) mainWindow.show();
@@ -68,6 +75,18 @@ app.on("ready", () => {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
+  }
+});
+
+ipcMain.on("minimize", (event) => {
+  mainWindow?.minimize();
+});
+
+ipcMain.on("toggleMaximize", (event) => {
+  if (!mainWindow?.isMaximized()) {
+    mainWindow?.maximize();
+  } else {
+    mainWindow.unmaximize();
   }
 });
 

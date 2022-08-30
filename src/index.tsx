@@ -2,12 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 import App from "./App";
 
-import store from "./store";
-import { DarkTheme } from "./themes/darkTheme";
+import store from "@store";
 
 const Global = createGlobalStyle`
 *{
@@ -38,10 +37,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <ThemeProvider theme={DarkTheme}>
-      <Global />
-      <App />
-    </ThemeProvider>
+    <Global />
+    <App />
   </Provider>
 );
 

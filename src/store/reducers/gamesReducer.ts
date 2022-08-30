@@ -1,6 +1,6 @@
 import ILocalGame from "@models/ILocalGame";
 import IServerGame from "@models/IServerGame";
-import { GamesActionTypes, type GamesAction } from "../../types/gamesFetcher";
+import { GamesActionTypes, GamesAction } from "../../types/gamesFetcher";
 
 interface GamesState {
   localGames: ILocalGame[];

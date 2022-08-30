@@ -1,13 +1,18 @@
+import { ThemeProvider } from "styled-components";
+
 import { useAppSelector } from "@hooks/redux";
 import Chrome from "@components/Chrome";
 
 function App() {
-  const games = useAppSelector((state) => state.games);
-  console.log(games);
+  const theme = useAppSelector((state) => state.window.theme);
+  const state = useAppSelector((state) => state);
+
+  console.log(state);
+
   return (
-    <div className="App">
+    <ThemeProvider theme={theme}>
       <Chrome />
-    </div>
+    </ThemeProvider>
   );
 }
 
