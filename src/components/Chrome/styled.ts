@@ -7,8 +7,8 @@ const Chrome = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: #0c0c0c;
-  color: #a1a1a1;
+  background-color: ${({ theme }) => theme.palette.background.third};
+  color: ${({ theme }) => theme.palette.text.secondary};
   -webkit-app-region: drag;
 `;
 
@@ -31,15 +31,14 @@ const ButtonArea = styled.div`
 const _button = styled.button`
   width: 45px;
   height: 30px;
-  background-color: #0c0c0c;
-  color: #a1a1a1;
+  background-color: ${({ theme }) => theme.palette.background.third};
   border: none;
   display: flex;
   align-items: center;
   width: center;
-  transition: background-color 150ms, color 150ms;
+  transition: ${({ theme }) => theme.durations.small};
   &:hover {
-    background-color: #2d2d2d;
+    background-color: ${({ theme }) => theme.palette.background.secondary};
   }
 `;
 
@@ -49,7 +48,7 @@ const MaximizeButton = styled(_button)``;
 
 const CloseButton = styled(_button)`
   &:hover {
-    background-color: #d32424;
+    background-color: ${({ theme }) => theme.palette.colors.darkRed};
   }
 `;
 

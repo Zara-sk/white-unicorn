@@ -10,7 +10,6 @@ import CloseIcon from "@components/assets/CloseIcon";
 const Chrome = () => {
   const [closeHover, setCloseHover] = useState(false);
 
-  const toggleCloseHover = () => setCloseHover(!closeHover);
   return (
     <S.Chrome>
       <S.Logo />
@@ -19,11 +18,9 @@ const Chrome = () => {
         <S.MinimizeButton children={<MinimizeIcon />} />
         <S.MaximizeButton children={<MaximizeIcon />} />
         <S.CloseButton
-          onMouseEnter={toggleCloseHover}
-          onMouseLeave={toggleCloseHover}
-          children={
-            <CloseIcon fillColor={closeHover ? "#a1a1a1" : "#f8f8f8"} />
-          }
+          onMouseEnter={() => setCloseHover(true)}
+          onMouseLeave={() => setCloseHover(false)}
+          children={<CloseIcon isHovered={closeHover} />}
         />
       </S.ButtonArea>
     </S.Chrome>
