@@ -17,7 +17,7 @@ const UnmaximizeIcon = () => {
           <path
             fill="#a1a1a1"
             stroke="#a1a1a1"
-            stroke-width="1"
+            strokeWidth="1"
             d="M6,1v30h32V1H6z M36,29H8V3h28V29z M2,16.001H0V37h21v-2H2V16.001z"
           />
         </g>

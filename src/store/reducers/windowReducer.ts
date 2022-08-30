@@ -28,6 +28,9 @@ export const WindowReducer = (
     case WindowActionTypes.WINDOW_TOGGLE_MAXIMIZE:
       return { ...state, isMaximized: action.payload };
 
+    case WindowActionTypes.WINDOW_SIZE_CHANGE:
+      return { ...state, sizing: action.payload };
+
     default:
       return state;
   }

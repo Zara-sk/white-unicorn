@@ -11,14 +11,14 @@ const MinimizeIcon = () => {
       width="45px"
       height="30px"
       viewBox="0 0 64 64"
-      enable-background="new 0 0 64 64"
+      enableBackground="new 0 0 64 64"
     >
       <g>
         <line
           fill="a1a1a1"
           stroke="#a1a1a1"
-          stroke-width="3"
-          stroke-miterlimit="10"
+          strokeWidth="3"
+          strokeMiterlimit="10"
           x1="19"
           y1="33"
           x2="45"

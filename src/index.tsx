@@ -15,6 +15,7 @@ const Global = createGlobalStyle`
   box-sizing: border-box;
   user-select: none;
   -webkit-app-region: no-drag;
+  color: white;
 }
 body {
   margin: 0;

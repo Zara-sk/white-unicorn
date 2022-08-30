@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 
-let mainWindow: Electron.BrowserWindow | null;
+let mainWindow: BrowserWindow | null;
 const PAGE_MODE: string | undefined = process.env.PAGE_MODE;
 
 const mainWindowSize = {
@@ -47,6 +47,9 @@ function createWindow() {
   mainWindow.on("unmaximize", () => {
     mainWindow?.webContents.send("maximizeEvent", mainWindow?.isMaximized());
   });
+  mainWindow.on("resize", () => {
+    mainWindow?.webContents.send("sizeEvent", mainWindow?.getSize()[0]);
+  });
 
   mainWindow.once("ready-to-show", () => {
     if (mainWindow != undefined) mainWindow.show();
@@ -78,11 +81,11 @@ app.on("window-all-closed", () => {
   }
 });
 
-ipcMain.on("minimize", (event) => {
+ipcMain.on("minimize", (event: any) => {
   mainWindow?.minimize();
 });
 
-ipcMain.on("toggleMaximize", (event) => {
+ipcMain.on("toggleMaximize", (event: any) => {
   if (!mainWindow?.isMaximized()) {
     mainWindow?.maximize();
   } else {
@@ -90,5 +93,8 @@ ipcMain.on("toggleMaximize", (event) => {
   }
 });
 
+ipcMain.on("close", (event: any) => {
+  app.quit();
+});
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.

@@ -1,9 +1,9 @@
 import { DefaultTheme } from "styled-components";
 
 enum WindowSizes {
-  SMALL,
-  MEDIUM,
-  LARGE,
+  SMALL = 0b001,
+  MEDIUM = 0b010,
+  LARGE = 0b100,
 }
 
 enum WindowActionTypes {

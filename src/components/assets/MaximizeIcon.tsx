@@ -12,7 +12,7 @@ const MaximizeIcon = () => {
       <g>
         <path
           stroke="#a1a1a1"
-          stroke-width="0.5"
+          strokeWidth="0.5"
           fill="#f8f8f8"
           d="M0,16h16V0H0V16z M1,1h14v14H1V1z"
         />
