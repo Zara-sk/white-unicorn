@@ -8,7 +8,7 @@ const toggleMaximize = () => {
   ipcRenderer.send("toggleMaximize");
 };
 
-const subscribeOnMaximizeToggle = (f: any) => {
+const subscribeOnMaximizeToggle = (f: subscribeFunction) => {
   ipcRenderer.on("maximizeEvent", f);
 };
 
@@ -16,14 +16,14 @@ const close = () => {
   ipcRenderer.send("close");
 };
 
-const subscribeOnSizeChange = (f: any) => {
+const subscribeOnSizeChange = (f: subscribeFunction) => {
   ipcRenderer.on("sizeEvent", f);
 };
 
 export default {
   minimize,
   toggleMaximize,
-  subscribeOnMaximizeToggle,
   close,
+  subscribeOnMaximizeToggle,
   subscribeOnSizeChange,
 };

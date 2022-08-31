@@ -1,11 +1,14 @@
+type subscribeFunction = (event: any, payload: any) => void;
+
 declare interface Window {
   api: {
     window: {
       minimize(): void;
       toggleMaximize(): void;
-      subscribeOnMaximizeToggle(f: any): void;
       close(): void;
-      subscribeOnSizeChange(f: any): void;
+
+      subscribeOnMaximizeToggle(f: subscribeFunction): void;
+      subscribeOnSizeChange(f: subscribeFunction): void;
     };
   };
 }

@@ -4,6 +4,8 @@
     "paths": {
       "@api": ["src/api"],
       "@components/*": ["src/components/*"],
+      "@pages": ["src/components/Pages"],
+      "@pages/*": ["src/components/Pages*"],
       "@types/*": ["src/types/*"],
       "@themes/*": ["src/themes/*"],
       "@models/*": ["src/models/*"],
