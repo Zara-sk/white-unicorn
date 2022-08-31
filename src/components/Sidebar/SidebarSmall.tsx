@@ -1,13 +1,15 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+
+import GloveStatus from "@components/GloveStatus";
+import Navbar from "@components/Navbar";
 
 import * as S from "./styled.small";
 
 const SidebarSmall = () => {
   return (
     <S.SidebarSmall>
-      <NavLink to="/library">lib</NavLink>
-      <NavLink to="/debug">debug</NavLink>
+      <GloveStatus.Small />
+      <Navbar.Small />
     </S.SidebarSmall>
   );
 };

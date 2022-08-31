@@ -10,7 +10,7 @@ export const DarkTheme: DefaultTheme = {
     text: {
       main: "#f8f8f8",
       secondary: "#a1a1a1",
-      third: "",
+      third: "#3D3D3D",
     },
     colors: {
       red: "",

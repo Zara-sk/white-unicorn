@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Main = styled.div`
   width: 100%;
-  height: calc(100vh - 30px);
+  height: calc(100vh - 31px);
   display: flex;
   flex-direction: row;
   align-items: center;

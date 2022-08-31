@@ -2,13 +2,14 @@ import styled from "styled-components";
 
 const Chrome = styled.div`
   width: 100%;
-  height: 30px;
+  height: 31px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.palette.background.third};
   color: ${({ theme }) => theme.palette.text.secondary};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.text.third};
   -webkit-app-region: drag;
 `;
 

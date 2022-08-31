@@ -1,7 +1,11 @@
 import React from "react";
 import { useTheme } from "styled-components";
 
-const CloseIcon: React.FC<{ isHovered: boolean }> = ({ isHovered }) => {
+type CloseIconProps = {
+  isHovered: boolean;
+};
+
+const CloseIcon: React.FC<CloseIconProps> = ({ isHovered }) => {
   const theme = useTheme();
   return (
     <svg
