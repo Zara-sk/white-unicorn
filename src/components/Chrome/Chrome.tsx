@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { WinApi } from "@api";
+import { WinService } from "@services";
 import { useActions, useAppSelector } from "@hooks/redux";
 import MinimizeIcon from "@components/assets/MinimizeIcon";
 import MaximizeIcon from "@components/assets/MaximizeIcon";
@@ -19,15 +19,15 @@ const Chrome = () => {
       <S.Title>Unicorn Client</S.Title>
       <S.ButtonArea>
         <S.MinimizeButton
-          onClick={WinApi.minimizeWindow}
+          onClick={WinService.minimizeWindow}
           children={<MinimizeIcon />}
         />
         <S.MaximizeButton
-          onClick={WinApi.toggleMaximizeWindow}
+          onClick={WinService.toggleMaximizeWindow}
           children={isMaximized ? <UnmaximizeIcon /> : <MaximizeIcon />}
         />
         <S.CloseButton
-          onClick={WinApi.closeWindow}
+          onClick={WinService.closeWindow}
           onMouseEnter={() => setCloseHover(true)}
           onMouseLeave={() => setCloseHover(false)}
           children={<CloseIcon isHovered={closeHover} />}
