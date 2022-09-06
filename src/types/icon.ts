@@ -1,8 +1,8 @@
 import { DefaultTheme } from "styled-components";
 
 enum IconSizes {
-  SMALL = "",
-  MEDIUM = "",
+  SMALL = "35px",
+  MEDIUM = "40px",
   NONE = "set-by-itself",
 }
 

@@ -3,7 +3,7 @@ import { DefaultTheme } from "styled-components";
 export const DarkTheme: DefaultTheme = {
   palette: {
     background: {
-      main: "",
+      main: "#444444",
       secondary: "#2d2d2d",
       third: "#0c0c0c",
     },

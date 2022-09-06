@@ -5,8 +5,8 @@ const DebugIcon: React.FC<IconProps> = ({ size, theme }) => {
   return (
     <svg
       fill={theme.palette.text.secondary}
-      width="45px"
-      height="45px"
+      width={size}
+      height={size}
       viewBox="0 0 512 512"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"

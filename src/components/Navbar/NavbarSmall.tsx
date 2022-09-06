@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 
 import IPage from "../../types/page";
 import { IconSizes } from "../../types/icon";
@@ -15,9 +14,9 @@ const NavbarSmall = () => {
   return (
     <S.SmallNavbar>
       {Pages.map((page: IPage) => (
-        <NavLink to={page.path}>
-          {<page.icon size={IconSizes.MEDIUM} theme={theme} />}
-        </NavLink>
+        <S.SmallNavLink to={page.path}>
+          <page.icon size={IconSizes.MEDIUM} theme={theme} />
+        </S.SmallNavLink>
       ))}
     </S.SmallNavbar>
   );
