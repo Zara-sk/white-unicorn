@@ -4,6 +4,8 @@
     "paths": {
       "@services": ["src/services"],
       "@components/*": ["src/components/*"],
+      "@generic/*": ["src/components/generic/*"],
+      "@assets/*": ["src/components/assets/*"],
       "@pages": ["src/components/Pages"],
       "@pages/*": ["src/components/Pages*"],
       "@types/*": ["src/types/*"],

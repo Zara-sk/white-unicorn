@@ -8,7 +8,10 @@
     "baseUrl": ".",
     "paths": {
       "*": ["mode_modules/*"]
-    }
+    },
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true
   },
   "include": ["**/*"]
 }

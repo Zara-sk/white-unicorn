@@ -1,5 +1,10 @@
 import { app, BrowserWindow, ipcMain } from "electron";
+
 import * as path from "path";
+
+import storage, { STORAGE_KEYS, updateWindowPrefs } from "./storage";
+
+const gotTheLock = app.requestSingleInstanceLock();
 
 let mainWindow: BrowserWindow | null;
 const PAGE_MODE: string | undefined = process.env.PAGE_MODE;
@@ -17,12 +22,15 @@ const authWindowSize = {
   minHeight: 550,
   width: 350,
   minWidth: 350,
-  resizable: true,
+  resizable: false,
 };
 
 function createWindow() {
+  const windowPreferences = storage.get(STORAGE_KEYS.WINDOW);
+
   mainWindow = new BrowserWindow({
     ...mainWindowSize,
+    ...windowPreferences.sizes,
     show: false,
     frame: false,
     backgroundColor: "#1a1a1a",
@@ -35,20 +43,38 @@ function createWindow() {
     },
   });
 
+  if (windowPreferences.isMaximized) {
+    mainWindow.maximize();
+  }
+
   if (PAGE_MODE == "develop") {
     mainWindow.loadURL("http://localhost:3000/");
   } else {
     mainWindow.loadFile(path.join(__dirname, "../build/index.html"));
   }
 
+  mainWindow.on("move", () => {
+    if (mainWindow) {
+      updateWindowPrefs({ pos: mainWindow.getPosition() });
+    }
+  });
   mainWindow.on("maximize", () => {
-    mainWindow?.webContents.send("maximizeEvent", mainWindow?.isMaximized());
+    if (mainWindow) {
+      updateWindowPrefs({ isM: mainWindow.isMaximized() });
+      mainWindow.webContents.send("maximizeEvent", mainWindow.isMaximized());
+    }
   });
   mainWindow.on("unmaximize", () => {
-    mainWindow?.webContents.send("maximizeEvent", mainWindow?.isMaximized());
+    if (mainWindow) {
+      updateWindowPrefs({ isM: mainWindow.isMaximized() });
+      mainWindow.webContents.send("maximizeEvent", mainWindow.isMaximized());
+    }
   });
   mainWindow.on("resize", () => {
-    mainWindow?.webContents.send("sizeEvent", mainWindow?.getSize()[0]);
+    if (mainWindow) {
+      updateWindowPrefs({ size: mainWindow.getSize() });
+      mainWindow.webContents.send("sizeEvent", mainWindow.getSize()[0]);
+    }
   });
 
   mainWindow.once("ready-to-show", () => {
@@ -62,9 +88,23 @@ function createWindow() {
   });
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+// Не позволяем создать лишний instance
+if (!gotTheLock) {
+  app.quit();
+} else {
+  app.on(
+    "second-instance",
+    (event: Event, argv: string[], workingDirectory: string, data: unknown) => {
+      if (mainWindow) {
+        if (mainWindow.isMinimized()) {
+          mainWindow.restore();
+        }
+        mainWindow.focus();
+      }
+    }
+  );
+}
+
 app.on("ready", () => {
   createWindow();
   app.on("activate", function () {
@@ -72,9 +112,6 @@ app.on("ready", () => {
   });
 });
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
@@ -96,5 +133,3 @@ ipcMain.on("toggleMaximize", (event: any) => {
 ipcMain.on("close", (event: any) => {
   app.quit();
 });
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.
