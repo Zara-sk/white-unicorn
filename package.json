@@ -22,15 +22,19 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
+    "styled-components": "^5.3.5",
     "typescript": "^4.8.2",
     "web-vitals": "^2.1.4"
   },
+  "homepage": "/",
   "scripts": {
-    "web:dev": "react-app-rewired start",
+    "web:client:dev": "cross-env CLI=client react-app-rewired start",
+    "web:login:dev": "cross-env CLI=login react-app-rewired start",
     "web:build": "react-app-rewired build",
     "desktop:dev": "cross-env PAGE_MODE=develop electron ./build/electron.js",
     "desktop:prod": "cross-env PAGE_MODE=production electron ./build/electron.js",
     "desktop:build": "tsc -p electron/tsconf.json",
+    "build": "react-app-rewired build && tsc -p electron/tsconf.json",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -57,7 +61,6 @@
     "electron": "^20.1.0",
     "json-server": "^0.17.0",
     "react-app-alias": "^2.2.1",
-    "react-app-rewired": "^2.2.1",
-    "styled-components": "^5.3.5"
+    "react-app-rewired": "^2.2.1"
   }
 }

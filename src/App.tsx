@@ -1,8 +1,9 @@
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
 import { ThemeProvider } from "styled-components";
 
 import { useAppSelector } from "@hooks/redux";
+
 import Chrome from "@components/Chrome";
 import Main from "@components/Main";
 
@@ -12,9 +13,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Chrome />
-      <BrowserRouter>
+      <HashRouter>
         <Main />
-      </BrowserRouter>
+      </HashRouter>
     </ThemeProvider>
   );
 }
