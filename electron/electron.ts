@@ -50,7 +50,7 @@ function createWindow() {
   if (PAGE_MODE == "develop") {
     mainWindow.loadURL("http://localhost:3000/");
   } else {
-    mainWindow.loadFile(path.join(__dirname, "./index.html"));
+    mainWindow.loadFile(path.join(__dirname, "./client.html"));
   }
 
   mainWindow.on("move", () => {
