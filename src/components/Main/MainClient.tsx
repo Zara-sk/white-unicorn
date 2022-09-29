@@ -3,15 +3,15 @@ import React from "react";
 import Sidebar from "@components/Sidebar";
 import PagesEntry from "@components/Pages";
 
-import * as S from "./styled";
+import * as S from "./styled.client";
 
-const Main = () => {
+const MainClient = () => {
   return (
-    <S.Main>
+    <S.MainClient>
       <Sidebar />
       <PagesEntry />
-    </S.Main>
+    </S.MainClient>
   );
 };
 
-export default Main;
+export default MainClient;

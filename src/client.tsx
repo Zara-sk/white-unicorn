@@ -1,46 +1,23 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import reportWebVitals from "./reportWebVitals";
-import { Provider } from "react-redux";
-import { createGlobalStyle } from "styled-components";
+import { HashRouter } from "react-router-dom";
 
-import App from "./App";
+import { ThemeProvider } from "styled-components";
 
-import store from "@store";
+import { useAppSelector } from "@hooks/redux";
 
-const Global = createGlobalStyle`
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  user-select: none;
-  -webkit-app-region: no-drag;
-  color: white;
-}
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+import Chrome from "@components/Chrome";
+import Main from "@components/Main";
+
+function App() {
+  const theme = useAppSelector((state) => state.window.theme);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Chrome />
+      <HashRouter>
+        <Main.Client />
+      </HashRouter>
+    </ThemeProvider>
+  );
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-`;
-
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-root.render(
-  <Provider store={store}>
-    <Global />
-    <App />
-  </Provider>
-);
-
-// reportWebVitals();
+export default App;

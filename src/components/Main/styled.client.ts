@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Main = styled.div`
+const MainClient = styled.div`
   width: 100%;
   height: calc(100vh - 31px);
   display: flex;
@@ -9,4 +9,4 @@ const Main = styled.div`
   justify-content: space-between;
 `;
 
-export { Main };
+export { MainClient };

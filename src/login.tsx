@@ -1,9 +1,21 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import { HashRouter } from "react-router-dom";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-root.render(<React.Fragment>asdweq</React.Fragment>);
+import { ThemeProvider } from "styled-components";
 
-// reportWebVitals();
+import { useAppSelector } from "@hooks/redux";
+
+import Chrome from "@components/Chrome";
+import Main from "@components/Main";
+
+function Login() {
+  const theme = useAppSelector((state) => state.window.theme);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Chrome color={false} logo={true} min={false} max={false} title={false} />
+      <Main.Login />
+    </ThemeProvider>
+  );
+}
+
+export default Login;

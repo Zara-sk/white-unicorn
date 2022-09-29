@@ -21,8 +21,10 @@ const mainWindowSize = {
 const authWindowSize = {
   height: 550,
   minHeight: 550,
+  maxHeight: 550,
   width: 350,
   minWidth: 350,
+  maxWidth: 350,
   resizable: false,
 };
 
@@ -32,7 +34,7 @@ const CreateLoginWindow = () => {
   mainWindow = new BrowserWindow({
     ...authWindowSize,
     show: false,
-    frame: true,
+    frame: false,
     backgroundColor: "#1a1a1a",
 
     webPreferences: {
@@ -141,16 +143,19 @@ if (!gotTheLock) {
 }
 
 app.on("ready", () => {
-  // createMainWindow();
-  CreateLoginWindow();
   if (CLI == "client") {
     createMainWindow();
   } else {
     CreateLoginWindow();
   }
-  // app.on("activate", function () {
-  //   if (BrowserWindow.getAllWindows().length === 0) createMainWindow();
-  // });
+  app.on("activate", function () {
+    if (BrowserWindow.getAllWindows().length === 0)
+      if (CLI == "client") {
+        createMainWindow();
+      } else {
+        CreateLoginWindow();
+      }
+  });
 });
 
 app.on("window-all-closed", () => {

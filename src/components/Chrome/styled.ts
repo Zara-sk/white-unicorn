@@ -13,6 +13,11 @@ const Chrome = styled.div`
   -webkit-app-region: drag;
 `;
 
+const UncolorizeChrome = styled(Chrome)`
+  background-color: #00000000;
+  border-bottom: none;
+`;
+
 const Logo = styled.div`
   -webkit-app-region: drag;
 `;
@@ -32,7 +37,7 @@ const ButtonArea = styled.div`
 const _button = styled.button`
   width: 45px;
   height: 30px;
-  background-color: ${({ theme }) => theme.palette.background.third};
+  background-color: inherit;
   border: none;
   display: flex;
   align-items: center;
@@ -55,6 +60,7 @@ const CloseButton = styled(_button)`
 
 export {
   Chrome,
+  UncolorizeChrome,
   Logo,
   Title,
   ButtonArea,
