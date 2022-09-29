@@ -8,6 +8,7 @@ const gotTheLock = app.requestSingleInstanceLock();
 
 let mainWindow: BrowserWindow | null;
 const PAGE_MODE: string | undefined = process.env.PAGE_MODE;
+const CLI: string | undefined = process.env.CLI;
 
 const mainWindowSize = {
   height: 650,
@@ -25,7 +26,41 @@ const authWindowSize = {
   resizable: false,
 };
 
-function createWindow() {
+const CreateLoginWindow = () => {
+  const authPreferences = storage.get(STORAGE_KEYS.AUTH);
+
+  mainWindow = new BrowserWindow({
+    ...authWindowSize,
+    show: false,
+    frame: true,
+    backgroundColor: "#1a1a1a",
+
+    webPreferences: {
+      javascript: true,
+      nodeIntegration: true,
+      contextIsolation: true,
+      preload: path.join(__dirname, "preload.js"),
+    },
+  });
+
+  if (PAGE_MODE == "develop") {
+    mainWindow.loadURL("http://localhost:3000/");
+  } else {
+    mainWindow.loadFile(path.join(__dirname, "./login.html"));
+  }
+
+  mainWindow.once("ready-to-show", () => {
+    if (mainWindow != undefined) mainWindow.show();
+  });
+
+  mainWindow.webContents.openDevTools();
+
+  mainWindow.on("closed", () => {
+    mainWindow = null;
+  });
+};
+
+const createMainWindow = () => {
   const windowPreferences = storage.get(STORAGE_KEYS.WINDOW);
 
   mainWindow = new BrowserWindow({
@@ -86,7 +121,7 @@ function createWindow() {
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
-}
+};
 
 // Не позволяем создать лишний instance
 if (!gotTheLock) {
@@ -106,10 +141,16 @@ if (!gotTheLock) {
 }
 
 app.on("ready", () => {
-  createWindow();
-  app.on("activate", function () {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
+  // createMainWindow();
+  CreateLoginWindow();
+  if (CLI == "client") {
+    createMainWindow();
+  } else {
+    CreateLoginWindow();
+  }
+  // app.on("activate", function () {
+  //   if (BrowserWindow.getAllWindows().length === 0) createMainWindow();
+  // });
 });
 
 app.on("window-all-closed", () => {

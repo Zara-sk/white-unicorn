@@ -1,6 +1,6 @@
 import Store from "electron-store";
 
-export interface SchemaType {
+export type SchemaType = {
   windowPreferences: {
     sizes: {
       width: number;
@@ -10,7 +10,12 @@ export interface SchemaType {
     };
     isMaximized: boolean;
   };
-}
+  authPreferences: {
+    login: string | null;
+    password: string | null;
+    token: string | null;
+  };
+};
 
 const defaults: SchemaType = {
   windowPreferences: {
@@ -22,11 +27,17 @@ const defaults: SchemaType = {
     },
     isMaximized: false,
   },
+  authPreferences: {
+    login: null,
+    password: null,
+    token: null,
+  },
 };
 
-export const STORAGE_KEYS: { [key: string]: keyof SchemaType } = {
-  WINDOW: "windowPreferences",
-};
+export enum STORAGE_KEYS {
+  WINDOW = "windowPreferences",
+  AUTH = "authPreferences",
+}
 
 const store = new Store<SchemaType>({ name: "settings", defaults: defaults });
 
@@ -50,6 +61,21 @@ export const updateWindowPrefs = ({ pos, size, isM }: WindowProps) => {
     wp.isMaximized = isM;
   }
   store.set(STORAGE_KEYS.WINDOW, wp);
+};
+
+interface AuthProps {
+  login: string;
+  password: string | null;
+  token: string | null;
+}
+
+export const updateAuthPrefs = (props: AuthProps) => {
+  store.set(STORAGE_KEYS.AUTH, props);
+};
+
+export const updateAuthToken = (token: string) => {
+  const authPrefs = { ...store.get(STORAGE_KEYS.AUTH), token: token };
+  store.set(STORAGE_KEYS.AUTH, authPrefs);
 };
 
 export default store;
