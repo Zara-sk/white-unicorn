@@ -14,6 +14,7 @@ const Chrome = styled.div`
 `;
 
 const UncolorizeChrome = styled(Chrome)`
+  height: 30px;
   background-color: #00000000;
   border-bottom: none;
 `;

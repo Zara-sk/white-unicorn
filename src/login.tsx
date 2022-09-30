@@ -7,7 +7,7 @@ import { useAppSelector } from "@hooks/redux";
 import Chrome from "@components/Chrome";
 import Main from "@components/Main";
 
-function Login() {
+const Login = () => {
   const theme = useAppSelector((state) => state.window.theme);
 
   return (
@@ -16,6 +16,6 @@ function Login() {
       <Main.Login />
     </ThemeProvider>
   );
-}
+};
 
 export default Login;

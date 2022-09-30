@@ -10,5 +10,8 @@ declare interface Window {
       subscribeOnMaximizeToggle(f: subscribeFunction): void;
       subscribeOnSizeChange(f: subscribeFunction): void;
     };
+    auth: {
+      authenticateUser(email, password): Promise<any>;
+    };
   };
 }

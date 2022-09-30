@@ -4,6 +4,7 @@ interface IPalette {
   main: string;
   secondary: string;
   third: string;
+  phonetic: string;
 }
 
 declare module "styled-components" {
