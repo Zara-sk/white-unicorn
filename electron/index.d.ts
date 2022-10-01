@@ -11,7 +11,7 @@ declare interface Window {
       subscribeOnSizeChange(f: subscribeFunction): void;
     };
     auth: {
-      authenticateUser(email, password): Promise<any>;
+      authenticateUser<T>(payload: T): Promise<T>;
     };
   };
 }

@@ -6,7 +6,7 @@ export const DarkTheme: DefaultTheme = {
       main: "#444444",
       secondary: "#2d2d2d",
       third: "#0c0c0c",
-      phonetic: "",
+      phonetic: "#1a1a1a",
     },
     text: {
       main: "#f8f8f8",
