@@ -7,17 +7,17 @@ import { useAppSelector } from "@hooks/redux";
 import Chrome from "@components/Chrome";
 import Main from "@components/Main";
 
-function App() {
+function LauncherApp() {
   const theme = useAppSelector((state) => state.window.theme);
 
   return (
     <ThemeProvider theme={theme}>
       <Chrome />
       <HashRouter>
-        <Main.Client />
+        <Main.Launcher />
       </HashRouter>
     </ThemeProvider>
   );
 }
 
-export default App;
+export default LauncherApp;

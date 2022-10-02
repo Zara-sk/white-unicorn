@@ -1,7 +1,7 @@
-import MainClient from "./MainClient";
-import MainLogin from "./MainLogin";
+import MainLauncher from "./MainLauncher";
+import MainAuth from "./MainAuth";
 
 export default {
-  Client: MainClient,
-  Login: MainLogin,
+  Launcher: MainLauncher,
+  Auth: MainAuth,
 };

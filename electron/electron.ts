@@ -53,7 +53,7 @@ const CreateAuthWindow = () => {
   });
   currentWindow = authWindow;
 
-  if (PAGE_MODE == "develop") {
+  if (PAGE_MODE == "development") {
     authWindow.loadURL("http://localhost:3000/");
   } else {
     authWindow.loadFile(path.join(__dirname, "./login.html"));
@@ -94,10 +94,10 @@ const createLauncherWindow = () => {
     launcherWindow.maximize();
   }
 
-  if (PAGE_MODE == "develop") {
+  if (PAGE_MODE == "development") {
     launcherWindow.loadURL("http://localhost:3000/");
   } else {
-    launcherWindow.loadFile(path.join(__dirname, "./client.html"));
+    launcherWindow.loadFile(path.join(__dirname, "./launcher.html"));
   }
 
   launcherWindow.on("move", () => {
@@ -164,14 +164,14 @@ if (!gotTheLock) {
 }
 
 app.on("ready", () => {
-  if (CLI == "client") {
+  if (CLI == "launcher") {
     createLauncherWindow();
   } else {
     CreateAuthWindow();
   }
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0)
-      if (CLI == "client") {
+      if (CLI == "launcher") {
         createLauncherWindow();
       } else {
         CreateAuthWindow();
@@ -201,7 +201,7 @@ ipcMain.on("close", (event: any) => {
   app.quit();
 });
 
-ipcMain.on("auth:set", (event: any, payload: AuthPayload) => {
+ipcMain.on("auth:setPrefs", (event: any, payload: AuthPayload) => {
   if (payload.token) {
     updateAuthPrefs({
       login: payload.email,
@@ -211,7 +211,7 @@ ipcMain.on("auth:set", (event: any, payload: AuthPayload) => {
   }
 });
 
-ipcMain.on("client:start", (event: any) => {
+ipcMain.on("launcher:start", (event: any) => {
   if (authWindow) {
     authWindow.close();
     createLauncherWindow();

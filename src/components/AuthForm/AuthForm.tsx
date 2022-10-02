@@ -40,12 +40,12 @@ const AuthForm: React.FC<Props> = ({ setMessage }) => {
     AuthService.authenticateUser({ email, password })
       .then((res) => {
         setScenario(IScenario.SUCCESS);
-        window.api.auth.setAuthPreferences({
+        AuthService.setAuthPreferences({
           email,
           password,
           token: res.token,
         });
-        window.api.auth.launchClient();
+        AuthService.startLauncher();
       })
       .catch((statusCode: number) => {
         switch (statusCode) {

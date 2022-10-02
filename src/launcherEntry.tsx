@@ -4,7 +4,7 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { createGlobalStyle } from "styled-components";
 
-import App from "./Client";
+import LauncherApp from "./Launcher";
 
 import store from "@store";
 
@@ -39,8 +39,6 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <Global />
-    <App />
+    <LauncherApp />
   </Provider>
 );
-
-// reportWebVitals();

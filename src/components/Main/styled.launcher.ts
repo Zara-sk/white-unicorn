@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const MainClient = styled.div`
+export const MainLauncher = styled.div`
   width: 100%;
   height: calc(100vh - 31px);
   display: flex;
@@ -8,5 +8,3 @@ const MainClient = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-
-export { MainClient };

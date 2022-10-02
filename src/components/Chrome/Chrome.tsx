@@ -37,7 +37,7 @@ const Chrome: React.FC<IProps> = (props) => {
   return (
     <StyledChrome>
       {props.logo && <S.Logo />}
-      {props.title && <S.Title>Unicorn Client</S.Title>}
+      {props.title && <S.Title>Unicorn Launcher</S.Title>}
       <S.ButtonArea>
         {props.min && (
           <S.MinimizeButton

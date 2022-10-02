@@ -4,15 +4,15 @@ const options = {};
 
 const multipleEntry = require("react-app-rewire-multiple-entry")([
   {
-    entry: "src/clientEntry.tsx",
-    template: "public/client.html",
-    outPath: "/client.html",
+    entry: "src/launcherEntry.tsx",
+    template: "public/launcher.html",
+    outPath: "/launcher.html",
     omitHash: false,
   },
   {
-    entry: "src/loginEntry.tsx",
-    template: "public/login.html",
-    outPath: "/login.html",
+    entry: "src/authEntry.tsx",
+    template: "public/auth.html",
+    outPath: "/auth.html",
     omitHash: false,
   },
 ]);

@@ -3,15 +3,15 @@ import React from "react";
 import Sidebar from "@components/Sidebar";
 import PagesEntry from "@components/Pages";
 
-import * as S from "./styled.client";
+import * as S from "./styled.launcher";
 
-const MainClient = () => {
+const MainLauncher = () => {
   return (
-    <S.MainClient>
+    <S.MainLauncher>
       <Sidebar />
       <PagesEntry />
-    </S.MainClient>
+    </S.MainLauncher>
   );
 };
 
-export default MainClient;
+export default MainLauncher;

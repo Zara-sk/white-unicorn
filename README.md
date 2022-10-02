@@ -6,14 +6,14 @@
 
 Don't work in browser because of required api is declareted in electron part by providing of context briedge
 
-### `npm run web:client:dev`
+### `npm run web:launcher:dev`
 
-Runs the react app for auth page development.
+Runs the react app for launcher page development.
 In this case, local env TOKEN should be specified by any request for localhost/login (postman or anything else) and blue-unicorn launched
 
-### `npm run web:login:dev`
+### `npm run web:auth:dev`
 
-Runs the react app for client page development
+Runs the react app for auth page development
 
 ### `npm run web:build`
 
@@ -21,13 +21,13 @@ Build both 'pages' with multiple entries. Should not to be used :p, use `npm run
 
 ## desktop scripts
 
-### `npm run desktop:client:dev`
+### `npm run desktop:launcher:dev`
 
-Runs electron app for web instance of client page
+Runs electron app for web instance of launcher page
 
-### `npm run desktop:login:dev`
+### `npm run desktop:auth:dev`
 
-Runs electron app for web instance of login page
+Runs electron app for web instance of auth page
 
 ### `npm run desktop:build`
 

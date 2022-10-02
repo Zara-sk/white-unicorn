@@ -6,7 +6,7 @@ import { createGlobalStyle } from "styled-components";
 
 import store from "@store";
 
-import Login from "./Login";
+import AuthApp from "./Auth";
 
 const Global = createGlobalStyle`
 *{
@@ -38,6 +38,6 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <Global />
-    <Login />
+    <AuthApp />
   </Provider>
 );

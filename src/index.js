@@ -1,10 +1,10 @@
-if (process.env.NODE_ENV == "develop") {
-  if (process.env.CLI == "client") {
-    require("./clientEntry.tsx");
+if (process.env.NODE_ENV == "development") {
+  if (process.env.CLI == "launcher") {
+    require("./launcherEntry.tsx");
   } else {
-    require("./loginEntry.tsx");
+    require("./authEntry.tsx");
   }
 } else {
-  require("./clientEntry.tsx");
-  require("./loginEntry.tsx");
+  require("./launcherEntry.tsx");
+  require("./authEntry.tsx");
 }

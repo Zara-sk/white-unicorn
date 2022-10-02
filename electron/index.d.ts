@@ -19,7 +19,7 @@ declare interface Window {
     auth: {
       authenticateUser(payload: AuthPayload): Promise<AuthPayload>;
       setAuthPreferences(payload: AuthPayload): void;
-      launchClient(): void;
+      startLauncher(): void;
     };
   };
 }

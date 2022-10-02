@@ -24,11 +24,11 @@ const authenticateUser = ({
 };
 
 const setAuthPreferences = (payload: AuthPayload) => {
-  ipcRenderer.send("auth:set", payload);
+  ipcRenderer.send("auth:setPrefs", payload);
 };
 
-const launchClient = () => {
-  ipcRenderer.send("client:start");
+const startLauncher = () => {
+  ipcRenderer.send("launcher:start");
 };
 
-export default { authenticateUser, setAuthPreferences, launchClient };
+export default { authenticateUser, setAuthPreferences, startLauncher };

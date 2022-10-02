@@ -7,15 +7,15 @@ import { useAppSelector } from "@hooks/redux";
 import Chrome from "@components/Chrome";
 import Main from "@components/Main";
 
-const Login = () => {
+const AuthApp = () => {
   const theme = useAppSelector((state) => state.window.theme);
 
   return (
     <ThemeProvider theme={theme}>
       <Chrome color={false} logo={true} min={false} max={false} title={false} />
-      <Main.Login />
+      <Main.Auth />
     </ThemeProvider>
   );
 };
 
-export default Login;
+export default AuthApp;
