@@ -2,12 +2,6 @@ import { ipcRenderer } from "electron";
 
 import axios from "axios";
 
-type AuthPayload = {
-  email: string;
-  password: string;
-  token?: string;
-};
-
 const authenticateUser = ({
   email,
   password,
@@ -19,8 +13,22 @@ const authenticateUser = ({
         password: password,
       })
       .then((res) => resolve(res.data))
-      .catch((err) => reject(err.response.data.statusCode));
+      .catch((err) => {
+        if (err.response.data != undefined) {
+          reject(err.response.data.statusCode);
+        } else {
+          reject(500);
+        }
+      });
   });
 };
 
-export default { authenticateUser };
+const setAuthPreferences = (payload: AuthPayload) => {
+  ipcRenderer.send("auth:set", payload);
+};
+
+const launchClient = () => {
+  ipcRenderer.send("client:start");
+};
+
+export default { authenticateUser, setAuthPreferences, launchClient };

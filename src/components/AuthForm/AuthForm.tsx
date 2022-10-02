@@ -40,7 +40,12 @@ const AuthForm: React.FC<Props> = ({ setMessage }) => {
     AuthService.authenticateUser({ email, password })
       .then((res) => {
         setScenario(IScenario.SUCCESS);
-        console.log(res.token);
+        window.api.auth.setAuthPreferences({
+          email,
+          password,
+          token: res.token,
+        });
+        window.api.auth.launchClient();
       })
       .catch((statusCode: number) => {
         switch (statusCode) {
@@ -51,6 +56,10 @@ const AuthForm: React.FC<Props> = ({ setMessage }) => {
           case 401:
             setScenario(IScenario.ERROR);
             setMessage("Неверный пароль");
+            break;
+          case 500:
+            setScenario(IScenario.ERROR);
+            setMessage("Отсутствует подключение");
             break;
         }
       });
@@ -68,6 +77,7 @@ const AuthForm: React.FC<Props> = ({ setMessage }) => {
       setScenario(IScenario.TYPING);
     }
   };
+
   return (
     <S.Form onSubmit={handleSubmit}>
       <S.Input

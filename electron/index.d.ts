@@ -1,5 +1,11 @@
 type subscribeFunction = (event: any, payload: any) => void;
 
+type AuthPayload = {
+  email: string;
+  password: string;
+  token?: string;
+};
+
 declare interface Window {
   api: {
     window: {
@@ -11,7 +17,9 @@ declare interface Window {
       subscribeOnSizeChange(f: subscribeFunction): void;
     };
     auth: {
-      authenticateUser<T>(payload: T): Promise<T>;
+      authenticateUser(payload: AuthPayload): Promise<AuthPayload>;
+      setAuthPreferences(payload: AuthPayload): void;
+      launchClient(): void;
     };
   };
 }

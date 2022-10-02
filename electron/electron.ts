@@ -2,15 +2,22 @@ import { app, BrowserWindow, ipcMain } from "electron";
 
 import * as path from "path";
 
-import storage, { STORAGE_KEYS, updateWindowPrefs } from "./storage";
+import storage, {
+  STORAGE_KEYS,
+  updateAuthPrefs,
+  updateWindowPrefs,
+} from "./storage";
 
 const gotTheLock = app.requestSingleInstanceLock();
 
-let mainWindow: BrowserWindow | null;
+let authWindow: BrowserWindow | null;
+let launcherWindow: BrowserWindow | null;
+let currentWindow: BrowserWindow | null;
+
 const PAGE_MODE: string | undefined = process.env.PAGE_MODE;
 const CLI: string | undefined = process.env.CLI;
 
-const mainWindowSize = {
+const launcherWindowSize = {
   height: 650,
   minHeight: 650,
   width: 1100,
@@ -28,10 +35,10 @@ const authWindowSize = {
   resizable: false,
 };
 
-const CreateLoginWindow = () => {
+const CreateAuthWindow = () => {
   const authPreferences = storage.get(STORAGE_KEYS.AUTH);
 
-  mainWindow = new BrowserWindow({
+  authWindow = new BrowserWindow({
     ...authWindowSize,
     show: false,
     frame: false,
@@ -44,29 +51,31 @@ const CreateLoginWindow = () => {
       preload: path.join(__dirname, "preload.js"),
     },
   });
+  currentWindow = authWindow;
 
   if (PAGE_MODE == "develop") {
-    mainWindow.loadURL("http://localhost:3000/");
+    authWindow.loadURL("http://localhost:3000/");
   } else {
-    mainWindow.loadFile(path.join(__dirname, "./login.html"));
+    authWindow.loadFile(path.join(__dirname, "./login.html"));
   }
 
-  mainWindow.once("ready-to-show", () => {
-    if (mainWindow != undefined) mainWindow.show();
+  authWindow.once("ready-to-show", () => {
+    if (authWindow != undefined) authWindow.show();
   });
 
-  mainWindow.webContents.openDevTools();
+  authWindow.webContents.openDevTools();
 
-  mainWindow.on("closed", () => {
-    mainWindow = null;
+  authWindow.on("closed", () => {
+    authWindow = null;
   });
 };
 
-const createMainWindow = () => {
+const createLauncherWindow = () => {
   const windowPreferences = storage.get(STORAGE_KEYS.WINDOW);
+  const authPreferences = storage.get(STORAGE_KEYS.AUTH);
 
-  mainWindow = new BrowserWindow({
-    ...mainWindowSize,
+  launcherWindow = new BrowserWindow({
+    ...launcherWindowSize,
     ...windowPreferences.sizes,
     show: false,
     frame: false,
@@ -79,49 +88,56 @@ const createMainWindow = () => {
       preload: path.join(__dirname, "preload.js"),
     },
   });
+  currentWindow = launcherWindow;
 
   if (windowPreferences.isMaximized) {
-    mainWindow.maximize();
+    launcherWindow.maximize();
   }
 
   if (PAGE_MODE == "develop") {
-    mainWindow.loadURL("http://localhost:3000/");
+    launcherWindow.loadURL("http://localhost:3000/");
   } else {
-    mainWindow.loadFile(path.join(__dirname, "./client.html"));
+    launcherWindow.loadFile(path.join(__dirname, "./client.html"));
   }
 
-  mainWindow.on("move", () => {
-    if (mainWindow) {
-      updateWindowPrefs({ pos: mainWindow.getPosition() });
+  launcherWindow.on("move", () => {
+    if (launcherWindow) {
+      updateWindowPrefs({ pos: launcherWindow.getPosition() });
     }
   });
-  mainWindow.on("maximize", () => {
-    if (mainWindow) {
-      updateWindowPrefs({ isM: mainWindow.isMaximized() });
-      mainWindow.webContents.send("maximizeEvent", mainWindow.isMaximized());
+  launcherWindow.on("maximize", () => {
+    if (launcherWindow) {
+      updateWindowPrefs({ isM: launcherWindow.isMaximized() });
+      launcherWindow.webContents.send(
+        "maximizeEvent",
+        launcherWindow.isMaximized()
+      );
     }
   });
-  mainWindow.on("unmaximize", () => {
-    if (mainWindow) {
-      updateWindowPrefs({ isM: mainWindow.isMaximized() });
-      mainWindow.webContents.send("maximizeEvent", mainWindow.isMaximized());
+  launcherWindow.on("unmaximize", () => {
+    if (launcherWindow) {
+      updateWindowPrefs({ isM: launcherWindow.isMaximized() });
+      launcherWindow.webContents.send(
+        "maximizeEvent",
+        launcherWindow.isMaximized()
+      );
     }
   });
-  mainWindow.on("resize", () => {
-    if (mainWindow) {
-      updateWindowPrefs({ size: mainWindow.getSize() });
-      mainWindow.webContents.send("sizeEvent", mainWindow.getSize()[0]);
+  launcherWindow.on("resize", () => {
+    if (launcherWindow) {
+      updateWindowPrefs({ size: launcherWindow.getSize() });
+      launcherWindow.webContents.send("sizeEvent", launcherWindow.getSize()[0]);
     }
   });
 
-  mainWindow.once("ready-to-show", () => {
-    if (mainWindow != undefined) mainWindow.show();
+  launcherWindow.once("ready-to-show", () => {
+    if (launcherWindow != undefined) launcherWindow.show();
   });
 
-  mainWindow.webContents.openDevTools();
+  launcherWindow.webContents.openDevTools();
 
-  mainWindow.on("closed", () => {
-    mainWindow = null;
+  launcherWindow.on("closed", () => {
+    launcherWindow = null;
   });
 };
 
@@ -132,11 +148,16 @@ if (!gotTheLock) {
   app.on(
     "second-instance",
     (event: Event, argv: string[], workingDirectory: string, data: unknown) => {
-      if (mainWindow) {
-        if (mainWindow.isMinimized()) {
-          mainWindow.restore();
+      if (launcherWindow) {
+        if (launcherWindow.isMinimized()) {
+          launcherWindow.restore();
         }
-        mainWindow.focus();
+        launcherWindow.focus();
+      } else if (authWindow) {
+        if (authWindow.isMinimized()) {
+          authWindow.restore();
+        }
+        authWindow.focus();
       }
     }
   );
@@ -144,16 +165,16 @@ if (!gotTheLock) {
 
 app.on("ready", () => {
   if (CLI == "client") {
-    createMainWindow();
+    createLauncherWindow();
   } else {
-    CreateLoginWindow();
+    CreateAuthWindow();
   }
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0)
       if (CLI == "client") {
-        createMainWindow();
+        createLauncherWindow();
       } else {
-        CreateLoginWindow();
+        CreateAuthWindow();
       }
   });
 });
@@ -165,17 +186,34 @@ app.on("window-all-closed", () => {
 });
 
 ipcMain.on("minimize", (event: any) => {
-  mainWindow?.minimize();
+  currentWindow?.minimize();
 });
 
 ipcMain.on("toggleMaximize", (event: any) => {
-  if (!mainWindow?.isMaximized()) {
-    mainWindow?.maximize();
+  if (!currentWindow?.isMaximized()) {
+    currentWindow?.maximize();
   } else {
-    mainWindow.unmaximize();
+    currentWindow.unmaximize();
   }
 });
 
 ipcMain.on("close", (event: any) => {
   app.quit();
+});
+
+ipcMain.on("auth:set", (event: any, payload: AuthPayload) => {
+  if (payload.token) {
+    updateAuthPrefs({
+      login: payload.email,
+      password: payload.password,
+      token: payload.token,
+    });
+  }
+});
+
+ipcMain.on("client:start", (event: any) => {
+  if (authWindow) {
+    authWindow.close();
+    createLauncherWindow();
+  }
 });
