@@ -25,6 +25,7 @@ export const ErrorText = styled.p`
   height: 30px;
   text-align: center;
   color: ${({ theme }) => theme.palette.colors.darkRed};
+  -webkit-app-region: drag;
 `;
 
 export const VersionInfoText = styled.p`

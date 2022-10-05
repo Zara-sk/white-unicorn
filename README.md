@@ -9,7 +9,7 @@ Don't work in browser because of required api is declareted in electron part by 
 ### `npm run web:launcher:dev`
 
 Runs the react app for launcher page development.
-In this case, local env TOKEN should be specified by any request for localhost/login (postman or anything else) and blue-unicorn launched
+In this case, local env TOKEN should be specified by any request for `<server>/auth/login` (postman or anything else) and blue-unicorn have been launched
 
 ### `npm run web:auth:dev`
 
@@ -31,10 +31,14 @@ Runs electron app for web instance of auth page
 
 ### `npm run desktop:build`
 
-Same, use `npm run build` instead
+Same, use `npm run build` instead or only for re-build an electron instance
 
 ## other
 
 ### `npm run build`
 
 Build both part of application (electron&react)
+
+### `npm run prod`
+
+Run app in production mode (after `npm run build`)

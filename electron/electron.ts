@@ -43,6 +43,7 @@ const CreateAuthWindow = () => {
     show: false,
     frame: false,
     backgroundColor: "#1a1a1a",
+    icon: path.join(__dirname, "unicorn-white.ico"),
 
     webPreferences: {
       javascript: true,
@@ -56,7 +57,7 @@ const CreateAuthWindow = () => {
   if (PAGE_MODE == "development") {
     authWindow.loadURL("http://localhost:3000/");
   } else {
-    authWindow.loadFile(path.join(__dirname, "./login.html"));
+    authWindow.loadFile(path.join(__dirname, "./auth.html"));
   }
 
   authWindow.once("ready-to-show", () => {
@@ -80,6 +81,7 @@ const createLauncherWindow = () => {
     show: false,
     frame: false,
     backgroundColor: "#1a1a1a",
+    icon: path.join(__dirname, "unicorn-white.ico"),
 
     webPreferences: {
       javascript: true,

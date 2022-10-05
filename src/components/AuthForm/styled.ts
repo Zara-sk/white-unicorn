@@ -31,6 +31,9 @@ export const Input = styled.input`
     cursor: default;
     border: solid 2px ${({ theme }) => theme.palette.text.third};
     color: ${({ theme }) => theme.palette.text.secondary};
+    & + label {
+      color: ${({ theme }) => theme.palette.text.secondary};
+    }
   }
   &::selection {
     background-color: ${({ theme }) => theme.palette.background.main};
